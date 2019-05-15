@@ -143,12 +143,12 @@ You will also need to display the total amount of calories at the bottom of the 
 If you don't remember how to create responsive columns with Bulma, you can check the [documentation](https://bulma.io/documentation/columns/basics/).
 
 
-### Iteration 5 | Bonus | Group ingredients
+### Iteration 6 | Bonus | Group ingredients
 
 You made an awesome application, but you have found a little problem in the UX. For example, if you click twice on "Pizza", it will display 2 lines "*1 Pizza = 400 cal*" instead of 1 line  "*2 Pizza = 800 cal*". Fix that problem.
 
 
-### Iteration 6 | Bonus | Allow the user to remove an ingredient
+### Iteration 7 | Bonus | Allow the user to remove an ingredient
 
 On the "*Today's food*", add a trash icon to let users removing one of their items.
 
