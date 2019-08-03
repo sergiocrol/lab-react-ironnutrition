@@ -38,7 +38,7 @@ We will use [Bulma](https://bulma.io/) for the design :)
 ```sh
 $ npm install bulma --save
 ```
-
+In index.js:
 ```javascript
 import 'bulma/css/bulma.css';
 ```
