@@ -48,6 +48,7 @@ import 'bulma/css/bulma.css';
 
 Import the foods from the `foods.json` inside data folder.
 
+In App.js:
 ```js
 import foods from './data/foods.json'
 ```
