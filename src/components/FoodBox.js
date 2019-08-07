@@ -1,9 +1,34 @@
 import React, { Component } from 'react'
 
 class FoodBox extends Component {
+  state = {
+    value: '0',
+    name: '',
+    calories: '',
+  }
+
+  handleInputChange = (event) => {
+    const {name, value} = event.target;
+    this.setState({
+      [name]: value 
+    })
+  }
   
+  addQauntity = (event) => {
+    const {name, calories} = this.props.data;
+    const newValue = parseInt(event.target.parentElement.parentElement.children[0].children[0].value);
+    const newTodayFood = { newValue, name, calories};
+    console.log(newTodayFood);
+    this.props.addParentTodayFood(newTodayFood);
+    this.setState({
+      value: newValue,
+    })
+  }
+
+
+
   render() {
-    const {name, calories, image, quantity} = this.props.data;
+    const { name, calories, image } = this.props.data;
     return (
       <div className="box">
         <article className="media">
@@ -26,12 +51,14 @@ class FoodBox extends Component {
                 <input
                   className="input"
                   type="number" 
-                  value={quantity}
-                  // onChange={}
+                  name="value"
+                  value={this.state.value} 
+                  onChange={this.handleInputChange}
+
                 />
               </div>
               <div className="control">
-                <button className="button is-info">
+                <button className="button is-info" onClick={this.addQauntity}>
                   +
                 </button>
               </div>
