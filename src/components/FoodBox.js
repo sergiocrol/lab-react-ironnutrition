@@ -8,17 +8,16 @@ class FoodBox extends Component {
   }
 
   handleInputChange = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     this.setState({
-      [name]: value 
+      [name]: value
     })
   }
-  
+
   addQauntity = (event) => {
-    const {name, calories} = this.props.data;
+    const { name, calories } = this.props.data;
     const newValue = parseInt(event.target.parentElement.parentElement.children[0].children[0].value);
-    const newTodayFood = { newValue, name, calories};
-    console.log(newTodayFood);
+    const newTodayFood = { newValue, name, calories };
     this.props.addParentTodayFood(newTodayFood);
     this.setState({
       value: newValue,
@@ -34,7 +33,7 @@ class FoodBox extends Component {
         <article className="media">
           <div className="media-left">
             <figure className="image is-64x64">
-              <img src={image} alt={name}/>
+              <img src={image} alt={name} />
             </figure>
           </div>
           <div className="media-content">
@@ -50,9 +49,9 @@ class FoodBox extends Component {
               <div className="control">
                 <input
                   className="input"
-                  type="number" 
+                  type="number"
                   name="value"
-                  value={this.state.value} 
+                  value={this.state.value}
                   onChange={this.handleInputChange}
 
                 />

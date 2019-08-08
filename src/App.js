@@ -18,14 +18,14 @@ class App extends Component {
   }
 
   handleInputChange = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     this.setState({
-      [name]: value 
+      [name]: value
     })
   }
 
   addFood = (event) => {
-    const {display} = this.state;
+    const { display } = this.state;
     // event.preventDefault();
     const newDisplay = (display === 'block') ? 'none' : 'block';
     this.setState({
@@ -35,18 +35,18 @@ class App extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const {name, calories, image, quantity, foods} = this.state;
+    const { name, calories, image, quantity, foods } = this.state;
     const newFoods = [...foods];
-    const newFood = {name, calories, image, quantity}; 
+    const newFood = { name, calories, image, quantity };
     newFoods.push(newFood);
-    
+
     this.setState({
       foods: newFoods,
-      name:'',
+      name: '',
       calories: '',
-      image:''
+      image: ''
     })
-    this.addFood();    
+    this.addFood();
   }
 
   compareValue = (newValue) => {
@@ -56,29 +56,37 @@ class App extends Component {
   }
 
   addTodaysFood = (newTodayFood) => {
-    const {foodsToday} = this.state;
+    const { foodsToday } = this.state;
     const newFoodsToday = [...foodsToday];
-    newFoodsToday.push(newTodayFood);
-    const newTotalCalories = newTodayFood.newValue * newTodayFood.calories;
+    const exists = newFoodsToday.map((food) => { return food.name }).indexOf(newTodayFood.name);
+    exists === -1 ? newFoodsToday.push(newTodayFood) : newFoodsToday[exists].newValue++;
     this.setState({
       name: newTodayFood.name,
       calories: newTodayFood.calories,
       quantity: newTodayFood.newValue,
       foodsToday: newFoodsToday,
-      totalCalories: newTotalCalories
+    })
+  }
+
+  delete = index => {
+    const newFoodsToday = [...this.state.foodsToday];
+    newFoodsToday.splice(index, 1);
+    this.setState({
+      foodsToday: newFoodsToday
     })
   }
 
 
   render() {
-    const {name, calories, image, foods, display, valueGuai, totalCalories} = this.state;
+    const { name, calories, image, foods, display, valueGuai } = this.state;
+    let sumCalories = 0;
     return (
       <div className="App">
         <button onClick={this.addFood}>Add food</button>
-        <Search getvalue={this.compareValue}/>
-        <form onSubmit={this.handleSubmit} style={{display}}>
+        <Search getvalue={this.compareValue} />
+        <form onSubmit={this.handleSubmit} style={{ display }}>
           <label htmlFor="name">Name</label>
-          <input 
+          <input
             type="text"
             name="name"
             id="name"
@@ -109,10 +117,10 @@ class App extends Component {
 
         <div className="columns">
           <div className="column">
-            { foods.map((food, index) => {
-              if(food.name.toLowerCase().includes(valueGuai)){
-                return(
-                  <FoodBox data={food} key={index} index={index} addParentTodayFood={this.addTodaysFood}/>
+            {foods.map((food, index) => {
+              if (food.name.toLowerCase().includes(valueGuai)) {
+                return (
+                  <FoodBox data={food} key={index} index={index} addParentTodayFood={this.addTodaysFood} />
                 )
               } else {
                 return null;
@@ -122,22 +130,17 @@ class App extends Component {
           <div className="column">
             <h3>Today's food</h3>
             <ul>
-              {this.state.foodsToday.map((foodToday, index)=>{
-                return(
-                  <li key={index}>{foodToday.newValue} {foodToday.name} = {totalCalories}</li>
+              {this.state.foodsToday.map((foodToday, index, arr) => {
+                sumCalories = sumCalories + (foodToday.newValue * foodToday.calories);
+                return (
+                  <li key={index}>{foodToday.newValue} {foodToday.name} = {foodToday.newValue * foodToday.calories} cal<a className="delete" onClick={() => { this.delete(index) }}></a></li>
                 )
               })
               }
             </ul>
-
-            <p>Total calories: {totalCalories}</p>
+            <p>Total calories: {sumCalories}</p>
           </div>
-          
         </div>
-
-
-
-        
       </div>
     );
   }
